@@ -31,8 +31,10 @@ public class GameCanvas extends View {
     boolean gameStart = true;
     ArrayList<Bricks> bricks =new ArrayList<Bricks>();
     Stage stage = new Stage();
+    int action;
 
     DxBallActivity db = new DxBallActivity();
+
 
 
     //Setting up Canvus elements.
@@ -48,7 +50,7 @@ public class GameCanvas extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = MotionEventCompat.getActionMasked(event);
+                action = MotionEventCompat.getActionMasked(event);
                 if (ball.isballAvailable()) {
                     touchPoint = event.getX();
                     if (touchPoint < v.getWidth() / 2 && bar.getBarLeft()-20 > 0) {
@@ -169,12 +171,25 @@ public class GameCanvas extends View {
             paint.setFakeBoldText(true);
             canvas.drawText("Game Over",canvas.getWidth()/2-canvas.getWidth()/4,canvas.getHeight()/2, paint);
             canvas.drawText("Your Score: "+ score,canvas.getWidth()/2-canvas.getWidth()/3,canvas.getHeight()/2+134, paint);
-
-
-
+            canvas.drawText("Tap to Restart "+ score,canvas.getWidth()/2-canvas.getWidth()/3,canvas.getHeight()/2+134, paint);
             //gameOver = false;
-            level = 0;
-            gameStart=true;
+            //level = 0;
+            //gameStart=true;
+            if(action == MotionEvent.ACTION_DOWN){
+                life=1;
+                level=1;
+                gameStart=true;
+                stage.stage_level_one(canvas, brickX, brickY, bricks);
+               new GameCanvas(getContext());
+
+
+            }
+
+
+
+
+
+
 
 
 
@@ -189,9 +204,6 @@ public class GameCanvas extends View {
 
     }
 
-
-
-
-    }
+}
 
 
